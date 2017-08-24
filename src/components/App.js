@@ -35,10 +35,10 @@ class App extends Component {
     // The choice will be parsed and a newList will be created
     if (choice !== 'Choose an Option') {
       newList = choiceParser(list, choice);
-    }
 
-    // the state of the list is changed
-    this.setState({list: newList});
+      // the state of the list is changed
+      this.setState({list: newList});
+    }
   }
 
   // render our Components and give them their props
