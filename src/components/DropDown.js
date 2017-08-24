@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormGroup, ControlLabel, FormControl, Row, Col } from 'react-bootstrap';
 
+// A drop down menu which will sort our list based on the options given
 const DropDown = ({ onChange }) => {
   return (
     <Row style={{ marginTop:'1%', textAlign:'center' }}>

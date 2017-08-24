@@ -1,17 +1,19 @@
 import React from 'react';
-import { Row, Col, FormControl } from 'react-bootstrap';
+import { Row, Col, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
+// A form which based on what is entered into it filters our list
 const Search = ({ value, onChange }) => {
   return (
     <Row>
       <Col xs={12} sm={12} md={6} mdOffset={3}>
-        <form style={{marginTop: '2%', textAlign: 'center', width: '100%'}}>
+        <FormGroup style={{marginTop: '2%', textAlign: 'center', width: '100%'}}>
+          <ControlLabel>Search</ControlLabel>
           <FormControl
             type='text'
             value={value}
             onChange={onChange}
           />
-        </form>
+        </FormGroup>
       </Col>
     </Row>
   );

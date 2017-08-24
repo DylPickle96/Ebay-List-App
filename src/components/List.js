@@ -1,12 +1,17 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
+// this function returns only listItems that includes the searchTerm
 const isSearched = (searchTerm) => {
   return (listItem) => {
     return listItem.title.toLowerCase().includes(searchTerm.toLowerCase());
   }
 }
 
+// Return the list component based on the array that appears in our state
+// As well as filter based on the searchTerm inputted from users.
+// Bootstrap allows me to use their grid system to offset the list
+// in the center of the page
 const List = ({ list, searchTerm }) => {
   return (
     <Row style={{marginTop: '3%', textAlign: 'center'}}>

@@ -21,23 +21,27 @@ class App extends Component {
     this.dropDownChange = this.dropDownChange.bind(this);
   }
 
+  // sets the state of searchTerm as the value in the form changes
   searchChange (event) {
     this.setState({ searchTerm: event.target.value });
   }
 
+  // based on what choice is selected in the drop down
   dropDownChange (event) {
 
     const { list } = this.state;
     const choice = event.target.value;
     let newList;
-
+    // The choice will be parsed and a newList will be created
     if (choice !== 'Choose an Option') {
       newList = choiceParser(list, choice);
     }
 
+    // the state of the list is changed
     this.setState({list: newList});
   }
 
+  // render our Components and give them their props
   render () {
 
     const { list, searchTerm } = this.state;
