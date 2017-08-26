@@ -7,7 +7,8 @@ import ListItem from './ListItem';
 import Search from './Search';
 import DropDown from './DropDown';
 import { choiceParser } from '../helpers/choice';
-import { testObjects } from './test-object';
+import { ebayRequest } from '../helpers/requests';
+// import { testObjects } from './test-object';
 
 // this function returns only listItems that includes the searchTerm
 const isSearched = (searchTerm) => {
@@ -23,7 +24,7 @@ class App extends Component {
     super (props);
 
     this.state = {
-      list: testObjects,
+      list: [],
       searchTerm: ''
     }
 
@@ -67,7 +68,20 @@ class App extends Component {
       }
     }));
   }
-  // render our Components and give them their props
+
+  componentWillMount () {
+    ebayRequest()
+      .then(ebayObjects => {
+        let i = 0;
+        ebayObjects.map(function (ebayObject) {
+          const objectIDs = [1,2,3,4,5,6,7,8,9,10];
+          ebayObject['objectID'] = objectIDs[i];
+          i += 1;
+        })
+        this.setState({list: ebayObjects })
+      });
+  }
+
   render () {
 
     const { list, searchTerm } = this.state;
@@ -82,15 +96,18 @@ class App extends Component {
           onChange={this.dropDownChange}
         />
 
-        {/*
+        {
+          /*
 
           We filter the list based on the searchTerm which is what the user
           types into the top form. That combined with the dropdown menu the list
           gets mapped to its desired state. We also pass all props needed for
-          displaying information and for the drag and drop functionality. 
+          displaying information and for the drag and drop functionality.
 
-          */}
+          */
+        }
         { list.filter(isSearched(searchTerm)).map((listItem, i) => {
+            console.log(listItem)
             return (
               <ListItem
                 key={listItem.objectID}
