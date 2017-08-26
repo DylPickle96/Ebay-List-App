@@ -73,11 +73,14 @@ class App extends Component {
     ebayRequest()
       .then(ebayObjects => {
         let i = 0;
+        // adds an ID to each of our 10 objects
         ebayObjects.map(function (ebayObject) {
           const objectIDs = [1,2,3,4,5,6,7,8,9,10];
           ebayObject['objectID'] = objectIDs[i];
           i += 1;
+          return ebayObject
         })
+        // list gets set to ebay objects
         this.setState({list: ebayObjects })
       });
   }
@@ -112,8 +115,12 @@ class App extends Component {
               <ListItem
                 key={listItem.objectID}
                 title={listItem.title}
-                description={listItem.description}
+                location={listItem.location}
                 price={listItem.price}
+                picture={listItem.picture}
+                category={listItem.category}
+                startdate={listItem.startdate}
+                url={listItem.url}
                 index={i}
                 id={listItem.objectID}
                 moveListItem={this.moveListItem}

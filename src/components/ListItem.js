@@ -59,15 +59,16 @@ class ListItem extends Component {
 
   render () {
 
-    const { title, description, price, isDragging, connectDragSource, connectDropTarget } = this.props;
+    const { title, price, location, picture, url, isDragging, connectDragSource, connectDropTarget } = this.props;
     const opacity = isDragging ? 0 : 1;
 
     return connectDropTarget(connectDragSource(
       <div>
         <Row style={{marginTop: '3%', textAlign: 'center', opacity: opacity}}>
           <Col  xs={12} sm={12} md={6} mdOffset={3} >
-              <span>{title}</span><br />
-              <span>{description}</span><br />
+              <a href={url} target='_blank'>{title}</a><br />
+              <span>{location}</span><br />
+              <a href={url} target='_blank'><img src={picture} alt={title}></img></a><br />
               <span>${price}</span>
               <hr />
           </Col>
