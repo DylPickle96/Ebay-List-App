@@ -5,10 +5,11 @@ export const choiceParser = (list, choice) => {
   let newList;
 
   if (choice === 'Low to High') {
-    newList = lowHigh(list);
+    newList = sortByNumber(list);
   }
   else if (choice === 'High to Low') {
-    newList = highLow(list);
+    newList = sortByNumber(list);
+    newList = newList.reverse();
   }
   else if (choice === 'Alphabetical Order') {
     newList = alphabetical(list);
@@ -26,7 +27,8 @@ export const choiceParser = (list, choice) => {
   return newList;
 }
 
-const lowHigh = (list) => {
+const sortByNumber = (list) => {
+  console.log('list', list);
   let sortedList = [];
   let index;
 
@@ -34,15 +36,15 @@ const lowHigh = (list) => {
   while (list.length !== 0) {
 
     //default our target as the first position in the list
-    let smallestNum = list[0];
+    let smallNum = list[0];
 
     // if it's a number and if that number is smaller than the
-    // current smallest set that number to be our smallestNum
+    // current smallest set that number to be our smallNum
     // we repeat this over the whole list
     for (let i = 0; i < list.length; i++) {
       if (!isNaN(list[i].price)) {
-        if (smallestNum.price >= list[i].price) {
-          smallestNum = list[i];
+        if (parseInt((smallNum.price),10) >= parseInt((list[i].price),10)) {
+          smallNum = list[i];
           index = i;
         }
       }
@@ -51,33 +53,9 @@ const lowHigh = (list) => {
     // once done we push that object to the sortedList and splice
     // the list at it's index removing just that one object
     list.splice(index, 1);
-    sortedList.push(smallestNum);
+    sortedList.push(smallNum);
   }
-
-  return sortedList;
-}
-
-// inverse of the low to high function
-const highLow = (list) => {
-  let sortedList = [];
-  let index;
-
-  while (list.length !== 0) {
-    let largestNum = list[0];
-
-    for (let i = 0; i < list.length; i++) {
-      if (!isNaN(list[i].price)) {
-        if (largestNum.price <= list[i].price) {
-          largestNum = list[i];
-          index = i;
-        }
-      }
-    }
-
-    list.splice(index, 1);
-    sortedList.push(largestNum);
-  }
-
+  console.log('sorted list', sortedList);
   return sortedList;
 }
 
