@@ -16,6 +16,8 @@ const DropDown = ({ onChange }) => {
             <option value='Low to High'>Low to High</option>
             <option value='High to Low'>High to Low</option>
             <option value='Alphabetical Order'>Alphabetical Order</option>
+            <option value='Oldest to Newest'>Oldest to Newest</option>
+            <option value='Newest to Oldest'>Newest to Oldest</option>
           </FormControl>
         </FormGroup>
       </Col>

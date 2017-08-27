@@ -13,6 +13,13 @@ export const choiceParser = (list, choice) => {
   else if (choice === 'Alphabetical Order') {
     newList = alphabetical(list);
   }
+  else if (choice === 'Oldest to Newest') {
+    newList = sortByDate(list);
+  }
+  else if (choice === 'Newest to Oldest') {
+    newList = sortByDate(list);
+    newList = newList.reverse();
+  }
   else {
     return;
   }
@@ -20,7 +27,6 @@ export const choiceParser = (list, choice) => {
 }
 
 const lowHigh = (list) => {
-
   let sortedList = [];
   let index;
 
@@ -53,12 +59,10 @@ const lowHigh = (list) => {
 
 // inverse of the low to high function
 const highLow = (list) => {
-
   let sortedList = [];
   let index;
 
   while (list.length !== 0) {
-
     let largestNum = list[0];
 
     for (let i = 0; i < list.length; i++) {
@@ -100,4 +104,34 @@ const alphabetical = (list) => {
     }
   }
   return sortedList;
+}
+
+const sortByDate = (list) => {
+  let times = [];
+  let sortedList = [];
+
+  // grab all dates in the list
+  for (let i = 0; i < list.length; i++) {
+    times.push(list[i].startdate);
+  }
+
+  // sort a and b that if a is smaller than
+  // b sort a as an older date
+  times.sort(function (a, b) {
+    return new Date(a) - new Date(b);
+  });
+
+  // push the correct object if the current time
+  // matches the objects time
+  for (let i = 0; i < times.length; i++) {
+    for (let j = 0; j < list.length; j++) {
+      if (times[i] === list[j].startdate) {
+        sortedList.push(list[j]);
+        break;
+      }
+    }
+  }
+
+  return sortedList;
+
 }

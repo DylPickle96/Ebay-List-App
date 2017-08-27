@@ -110,7 +110,6 @@ class App extends Component {
           */
         }
         { list.filter(isSearched(searchTerm)).map((listItem, i) => {
-            console.log(listItem)
             return (
               <ListItem
                 key={listItem.objectID}
