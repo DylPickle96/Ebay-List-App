@@ -70,6 +70,7 @@ class ListItem extends Component {
             connectDragSource,
             connectDropTarget
           } = this.props;
+          
     const opacity = isDragging ? 0 : 1;
 
     return connectDropTarget(connectDragSource(

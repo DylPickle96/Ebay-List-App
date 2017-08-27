@@ -2,22 +2,24 @@ import React from 'react';
 import { FormGroup, ControlLabel, FormControl, Row, Col } from 'react-bootstrap';
 
 // A drop down menu which will sort our list based on the options given
-const DropDown = ({ onChange }) => {
+const DropDown = ({ onChange, sortOptions, name }) => {
   return (
     <Row style={{ marginTop:'1%', textAlign:'center' }}>
       <Col xs={12} sm={12} md={6} mdOffset={3}>
         <FormGroup controlId="formControlsSelect">
-          <ControlLabel>Sort</ControlLabel>
+          <ControlLabel>{name}</ControlLabel>
           <FormControl
             componentClass="select"
             onChange={onChange}
             >
             <option defaultValue="selected">Choose an Option</option>
-            <option value='Low to High'>Low to High</option>
-            <option value='High to Low'>High to Low</option>
-            <option value='Alphabetical Order'>Alphabetical Order</option>
-            <option value='Oldest to Newest'>Oldest to Newest</option>
-            <option value='Newest to Oldest'>Newest to Oldest</option>
+            {
+              sortOptions.map( (option, i) => {
+                return (
+                  <option value={option} key={i}>{option}</option>
+                );
+              })
+            }
           </FormControl>
         </FormGroup>
       </Col>

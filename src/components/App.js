@@ -25,12 +25,21 @@ class App extends Component {
 
     this.state = {
       list: [],
-      searchTerm: ''
+      searchTerm: '',
+      sortOptions: [
+                      'Low to High',
+                      'High to Low',
+                      'Alphabetical Order',
+                      'Oldest to Newest',
+                      'Newest to Oldest'
+                   ],
+      categories: []
     }
 
     this.searchChange = this.searchChange.bind(this);
     this.dropDownChange = this.dropDownChange.bind(this);
     this.moveListItem = this.moveListItem.bind(this);
+    this.grabCategories = this.grabCategories.bind(this);
   }
 
   // sets the state of searchTerm as the value in the form changes
@@ -54,7 +63,7 @@ class App extends Component {
   }
 
   // handles of the movement of listItems as they are dragged across the list
-  moveListItem(dragIndex, hoverIndex) {
+  moveListItem (dragIndex, hoverIndex) {
 
     const { list } = this.state;
     const dragListItem = list[dragIndex];
@@ -69,11 +78,24 @@ class App extends Component {
     }));
   }
 
+  grabCategories (list) {
+    const categories = [];
+
+    list.forEach(function (object) {
+      return (
+        categories.push(object.category)
+      );
+    });
+
+    return categories;
+  }
+
   componentWillMount () {
     ebayRequest()
       .then(ebayObjects => {
         let i = 0;
         // adds an ID to each of our 10 objects
+        // needed for the drag and drop functionality
         ebayObjects.map(function (ebayObject) {
           const objectIDs = [1,2,3,4,5,6,7,8,9,10];
           ebayObject['objectID'] = objectIDs[i];
@@ -81,13 +103,16 @@ class App extends Component {
           return ebayObject
         })
         // list gets set to ebay objects
-        this.setState({list: ebayObjects })
+        this.setState({list: ebayObjects }, function () {
+          const categories = this.grabCategories(this.state.list);
+          this.setState({categories: categories});
+        });
       });
   }
 
   render () {
 
-    const { list, searchTerm } = this.state;
+    const { list, searchTerm, sortOptions, categories } = this.state;
 
     return (
       <Grid>
@@ -97,8 +122,13 @@ class App extends Component {
         />
         <DropDown
           onChange={this.dropDownChange}
+          sortOptions={sortOptions}
+          name={'Sort'}
         />
-
+        <DropDown
+          sortOptions={categories}
+          name={'Categories'}
+        />
         {
           /*
 
