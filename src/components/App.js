@@ -6,7 +6,7 @@ import update from 'react/lib/update';
 import ListItem from './ListItem';
 import Search from './Search';
 import DropDown from './DropDown';
-import EbayNewButton from './Button';
+import EbayNewButton from './EbayNewButton';
 import { choiceParser } from '../helpers/choice';
 import { ebayRequest } from '../helpers/requests';
 
