@@ -9,7 +9,6 @@ import DropDown from './DropDown';
 import EbayNewButton from './Button';
 import { choiceParser } from '../helpers/choice';
 import { ebayRequest } from '../helpers/requests';
-// import { testObjects } from './test-object';
 
 // this function returns only listItems that includes the searchTerm
 const isSearched = (searchTerm) => {
