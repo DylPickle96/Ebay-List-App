@@ -46,6 +46,11 @@ const listItemTarget = {
   }
 }
 
+function decimalPlaces(num) {
+  if(Math.floor(num) === num) return 0;
+  return num.toString().split(".")[1].length || 0;
+}
+
 class ListItem extends Component {
 
   static propTypes = {
@@ -80,7 +85,7 @@ class ListItem extends Component {
               <a href={url} target='_blank' style={{color:'black'}}>{title}</a><br />
               <span>{location}</span><br />
               <a href={url} target='_blank'><img src={picture} alt={title}></img></a><br />
-              <span>${price}</span><br />
+              <span>${decimalPlaces(price) === 1 ? price + 0.00 : price}</span><br />
               <span>{category}</span><br />
               <span>{new Date(startdate).toString()}</span>
               <hr />
