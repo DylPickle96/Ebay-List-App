@@ -7,7 +7,7 @@ const Search = ({ value, onChange }) => {
     <Row>
       <Col xs={12} sm={12} md={6} mdOffset={3}>
         <FormGroup style={{marginTop: '2%', textAlign: 'center', width: '100%'}}>
-          <ControlLabel>Search</ControlLabel>
+          <ControlLabel>Search List</ControlLabel>
           <FormControl
             type='text'
             value={value}

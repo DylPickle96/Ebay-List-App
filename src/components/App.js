@@ -17,6 +17,16 @@ const isSearched = (searchTerm) => {
   }
 }
 
+const isCategory = (category) => {
+  return (listItem) => {
+    if (category !== '') {
+      return listItem.category === category;
+    }
+    else {
+      return ListItem
+    }
+  }
+}
 class App extends Component {
 
   constructor (props) {
@@ -33,11 +43,13 @@ class App extends Component {
                       'Oldest to Newest',
                       'Newest to Oldest'
                    ],
+      category: '',
       categories: []
     }
 
     this.searchChange = this.searchChange.bind(this);
-    this.dropDownChange = this.dropDownChange.bind(this);
+    this.sortDropDownChange = this.sortDropDownChange.bind(this);
+    this.categoryDropDownChange = this.categoryDropDownChange.bind(this);
     this.moveListItem = this.moveListItem.bind(this);
     this.grabCategories = this.grabCategories.bind(this);
   }
@@ -48,7 +60,7 @@ class App extends Component {
   }
 
   // based on what choice is selected in the drop down
-  dropDownChange (event) {
+  sortDropDownChange (event) {
 
     const { list } = this.state;
     const choice = event.target.value;
@@ -58,7 +70,16 @@ class App extends Component {
       newList = choiceParser(list, choice);
 
       // the state of the list is changed
-      this.setState({list: newList});
+      this.setState({ list: newList });
+    }
+  }
+
+  categoryDropDownChange (event) {
+    if (event.target.value === 'Choose an Option') {
+      this.setState({ category: '' });
+    }
+    else {
+      this.setState({ category: event.target.value });
     }
   }
 
@@ -112,7 +133,7 @@ class App extends Component {
 
   render () {
 
-    const { list, searchTerm, sortOptions, categories } = this.state;
+    const { list, searchTerm, sortOptions, category, categories } = this.state;
 
     return (
       <Grid>
@@ -121,13 +142,14 @@ class App extends Component {
           onChange={this.searchChange}
         />
         <DropDown
-          onChange={this.dropDownChange}
+          onChange={this.sortDropDownChange}
           sortOptions={sortOptions}
-          name={'Sort'}
+          name={'Sort list'}
         />
         <DropDown
+          onChange={this.categoryDropDownChange}
           sortOptions={categories}
-          name={'Categories'}
+          name={'Choose a Category'}
         />
         {
           /*
@@ -139,7 +161,7 @@ class App extends Component {
 
           */
         }
-        { list.filter(isSearched(searchTerm)).map((listItem, i) => {
+        { list.filter(isSearched(searchTerm)).filter(isCategory(category)).map((listItem, i) => {
             return (
               <ListItem
                 key={listItem.objectID}

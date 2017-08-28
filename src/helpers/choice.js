@@ -28,7 +28,7 @@ export const choiceParser = (list, choice) => {
 }
 
 const sortByNumber = (list) => {
-  console.log('list', list);
+
   let sortedList = [];
   let index;
 
@@ -55,7 +55,7 @@ const sortByNumber = (list) => {
     list.splice(index, 1);
     sortedList.push(smallNum);
   }
-  console.log('sorted list', sortedList);
+
   return sortedList;
 }
 
@@ -111,5 +111,4 @@ const sortByDate = (list) => {
   }
 
   return sortedList;
-
 }
