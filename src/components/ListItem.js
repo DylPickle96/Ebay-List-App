@@ -70,14 +70,14 @@ class ListItem extends Component {
             connectDragSource,
             connectDropTarget
           } = this.props;
-          
+
     const opacity = isDragging ? 0 : 1;
 
     return connectDropTarget(connectDragSource(
       <div>
         <Row style={{marginTop: '3%', textAlign: 'center', opacity: opacity}}>
           <Col  xs={12} sm={12} md={6} mdOffset={3} >
-              <a href={url} target='_blank'>{title}</a><br />
+              <a href={url} target='_blank' style={{color:'black'}}>{title}</a><br />
               <span>{location}</span><br />
               <a href={url} target='_blank'><img src={picture} alt={title}></img></a><br />
               <span>${price}</span><br />

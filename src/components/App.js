@@ -6,6 +6,7 @@ import update from 'react/lib/update';
 import ListItem from './ListItem';
 import Search from './Search';
 import DropDown from './DropDown';
+import EbayNewButton from './Button';
 import { choiceParser } from '../helpers/choice';
 import { ebayRequest } from '../helpers/requests';
 // import { testObjects } from './test-object';
@@ -17,6 +18,8 @@ const isSearched = (searchTerm) => {
   }
 }
 
+// filters the list based on weather or not the category of the list item
+// is equal to the selected category
 const isCategory = (category) => {
   return (listItem) => {
     if (category !== '') {
@@ -27,6 +30,7 @@ const isCategory = (category) => {
     }
   }
 }
+
 class App extends Component {
 
   constructor (props) {
@@ -52,6 +56,8 @@ class App extends Component {
     this.categoryDropDownChange = this.categoryDropDownChange.bind(this);
     this.moveListItem = this.moveListItem.bind(this);
     this.grabCategories = this.grabCategories.bind(this);
+    this.makeEbayRequest = this.makeEbayRequest.bind(this);
+    this.getNewListing = this.getNewListing.bind(this);
   }
 
   // sets the state of searchTerm as the value in the form changes
@@ -111,7 +117,7 @@ class App extends Component {
     return categories;
   }
 
-  componentWillMount () {
+  makeEbayRequest () {
     ebayRequest()
       .then(ebayObjects => {
         let i = 0;
@@ -129,6 +135,14 @@ class App extends Component {
           this.setState({categories: categories});
         });
       });
+  }
+
+  getNewListing () {
+    this.makeEbayRequest();
+  }
+
+  componentWillMount () {
+    this.makeEbayRequest();
   }
 
   render () {
@@ -150,6 +164,9 @@ class App extends Component {
           onChange={this.categoryDropDownChange}
           sortOptions={categories}
           name={'Choose a Category'}
+        />
+        <EbayNewButton
+          onClick={this.getNewListing}
         />
         {
           /*
