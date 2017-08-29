@@ -8,7 +8,7 @@ import Search from './Search';
 import DropDown from './DropDown';
 import EbayNewButton from './EbayNewButton';
 import { choiceParser } from '../helpers/choice';
-import { ebayRequest } from '../helpers/requests';
+import { ebayRequest, getList, postList } from '../helpers/requests';
 
 // this function returns only listItems that includes the searchTerm
 const isSearched = (searchTerm) => {
@@ -55,7 +55,7 @@ class App extends Component {
     this.categoryDropDownChange = this.categoryDropDownChange.bind(this);
     this.moveListItem = this.moveListItem.bind(this);
     this.grabCategories = this.grabCategories.bind(this);
-    this.makeEbayRequest = this.makeEbayRequest.bind(this);
+    this.makeListRequest = this.makeListRequest.bind(this);
     this.getNewListing = this.getNewListing.bind(this);
   }
 
@@ -75,7 +75,9 @@ class App extends Component {
       newList = choiceParser(list, choice);
 
       // the state of the list is changed
-      this.setState({ list: newList });
+      this.setState({ list: newList }, function () {
+          return postList(this.state.list);
+      });
     }
   }
 
@@ -116,32 +118,40 @@ class App extends Component {
     return categories;
   }
 
-  makeEbayRequest () {
-    ebayRequest()
+  makeListRequest () {
+    getList()
       .then(ebayObjects => {
-        let i = 0;
-        // adds an ID to each of our 10 objects
-        // needed for the drag and drop functionality
-        ebayObjects.map(function (ebayObject) {
-          const objectIDs = [1,2,3,4,5,6,7,8,9,10];
-          ebayObject['objectID'] = objectIDs[i];
-          i += 1;
-          return ebayObject
-        })
-        // list gets set to ebay objects
-        this.setState({list: ebayObjects }, function () {
-          const categories = this.grabCategories(this.state.list);
-          this.setState({categories: categories});
-        });
+        if (ebayObjects.length === 10) {
+          let i = 0;
+          // adds an ID to each of our 10 objects
+          // needed for the drag and drop functionality
+          ebayObjects.map(function (ebayObject) {
+            const objectIDs = [1,2,3,4,5,6,7,8,9,10];
+            ebayObject['objectID'] = objectIDs[i];
+            i += 1;
+            return ebayObject
+          })
+          // list gets set to ebay objects
+          this.setState({list: ebayObjects }, function () {
+            const categories = this.grabCategories(this.state.list);
+            this.setState({categories: categories});
+          });
+        }
+        else {
+          this.getNewListing();
+        }
       });
   }
 
   getNewListing () {
-    this.makeEbayRequest();
+    ebayRequest()
+      .then( () => {
+        this.makeListRequest();
+      });
   }
 
   componentWillMount () {
-    this.makeEbayRequest();
+    this.makeListRequest();
   }
 
   render () {
