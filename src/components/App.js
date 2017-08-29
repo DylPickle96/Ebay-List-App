@@ -103,16 +103,27 @@ class App extends Component {
           [hoverIndex, 0, dragListItem]
         ]
       }
-    }));
+    }), function () {
+      return postList(this.state.list);
+    });
   }
 
   grabCategories (list) {
     const categories = [];
 
     list.forEach(function (object) {
-      return (
-        categories.push(object.category)
-      );
+      const alreadyexists = categories.some(function (category) {
+        return category === object.category;
+      });
+
+      if (alreadyexists) {
+        return;
+      }
+      else {
+        return (
+          categories.push(object.category)
+        );
+      }
     });
 
     return categories;
@@ -121,6 +132,7 @@ class App extends Component {
   makeListRequest () {
     getList()
       .then(ebayObjects => {
+        console.log(ebayObjects.length);
         if (ebayObjects.length === 10) {
           let i = 0;
           // adds an ID to each of our 10 objects
